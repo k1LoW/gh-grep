@@ -22,47 +22,100 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"bufio"
+	"context"
 	"fmt"
-	"github.com/spf13/cobra"
+	"io/fs"
 	"os"
+	"regexp"
+
+	"github.com/bmatcuk/doublestar/v4"
+	"github.com/johejo/ghfs"
+	"github.com/k1LoW/gh-grep/gh"
+	"github.com/spf13/cobra"
 )
 
+var (
+	owner   string
+	repos   []string
+	include string
+	exclude string
+)
 
-
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "gh-grep",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Use:   "gh-grep [PATTERN]",
+	Short: "Print lines matching a pattern in repositories using GitHub API",
+	Long:  `Print lines matching a pattern in repositories using GitHub API`,
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ctx := context.Background()
+		pattern, err := regexp.Compile(args[0])
+		if err != nil {
+			return err
+		}
+		g, err := gh.New()
+		if err != nil {
+			return err
+		}
+		if len(repos) == 0 {
+			repos, err = g.Repositories(ctx, owner)
+			if err != nil {
+				return err
+			}
+		}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+		for _, repo := range repos {
+			fsys := ghfs.NewWithGitHubClient(g.Client(), owner, repo)
+			if err := doublestar.GlobWalk(fsys, include, func(path string, d fs.DirEntry) error {
+				if d.IsDir() {
+					return nil
+				}
+				if exclude != "" {
+					match, err := doublestar.PathMatch(exclude, path)
+					if err != nil {
+						return err
+					}
+					if match {
+						return nil
+					}
+				}
+				f, err := fsys.Open(path)
+				if err != nil {
+					return nil
+				}
+				defer f.Close()
+				// TODO: detect encoding
+				fscanner := bufio.NewScanner(f)
+				for fscanner.Scan() {
+					line := fscanner.Text()
+					matches := pattern.FindAllStringIndex(line, -1)
+					if len(matches) > 0 {
+						// TODO: color
+						fmt.Printf("%s/%s/%s:%s\n", owner, repo, path, line)
+					}
+				}
+				if err := fscanner.Err(); err != nil {
+					return err
+				}
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	},
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gh-grep.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().StringVarP(&owner, "owner", "", "", "owner")
+	rootCmd.MarkFlagRequired("owner")
+	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repo")
+	rootCmd.Flags().StringVarP(&include, "include", "", "**/*", "include")
+	rootCmd.Flags().StringVarP(&exclude, "exclude", "", "", "exclude")
 }
-
-
