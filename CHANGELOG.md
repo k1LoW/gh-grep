@@ -1,3 +1,6 @@
+## [v0.1.0](https://github.com/k1LoW/gh-grep/compare/v0.0.2...v0.1.0) (2021-11-01)
+
+
 ## [v0.0.2](https://github.com/k1LoW/gh-grep/compare/v0.0.1...v0.0.2) (2021-11-01)
 
 * Add gh-extension setting [#3](https://github.com/k1LoW/gh-grep/pull/3) ([k1LoW](https://github.com/k1LoW))
