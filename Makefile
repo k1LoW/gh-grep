@@ -26,7 +26,7 @@ lint:
 	golangci-lint run ./...
 
 build:
-	go build -ldflags="$(BUILD_LDFLAGS)"
+	go build -ldflags="$(BUILD_LDFLAGS)" -o grep
 
 depsdev:
 	go install github.com/Songmu/ghch/cmd/ghch@v0.10.2

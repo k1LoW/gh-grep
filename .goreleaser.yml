@@ -1,0 +1,97 @@
+before:
+  hooks:
+    - go mod download
+    - go mod tidy
+builds:
+-
+  id: gh-grep-linux
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - linux
+  goarch:
+    - amd64
+  ldflags:
+    - -s -w -X github.com/k1LoW/gh-grep.version={{.Version}} -X github.com/k1LoW/gh-grep.commit={{.FullCommit}} -X github.com/k1LoW/gh-grep.date={{.Date}} -X github.com/k1LoW/gh-grep/version.Version={{.Version}}
+-
+  id: gh-grep-darwin
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - darwin
+  goarch:
+    - amd64
+    - arm64
+  ldflags:
+    - -s -w -X github.com/k1LoW/gh-grep.version={{.Version}} -X github.com/k1LoW/gh-grep.commit={{.FullCommit}} -X github.com/k1LoW/gh-grep.date={{.Date}} -X github.com/k1LoW/gh-grep/version.Version={{.Version}}
+-
+  id: gh-grep-windows
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - windows
+  goarch:
+    - amd64
+  ldflags:
+    - -s -w -X github.com/k1LoW/gh-grep.version={{.Version}} -X github.com/k1LoW/gh-grep.commit={{.FullCommit}} -X github.com/k1LoW/gh-grep.date={{.Date}} -X github.com/k1LoW/gh-grep/version.Version={{.Version}}
+archives:
+-
+  id: gh-grep-archive
+  name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format_overrides:
+    - goos: darwin
+      format: zip
+  files:
+    - CREDITS
+    - README.md
+    - CHANGELOG.md
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Version }}-next"
+changelog:
+  skip: true
+dockers:
+  -
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - 'ghcr.io/k1low/gh-grep:v{{ .Version }}'
+      - 'ghcr.io/k1low/gh-grep:latest'
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source=https://github.com/k1LoW/gh-grep"
+    extra_files:
+      - scripts/entrypoint.sh
+brews:
+  -
+    name: gh-grep
+    tap:
+      owner: k1LoW
+      name: homebrew-tap
+    commit_author:
+      name: k1LoW
+      email: k1lowxb@gmail.com
+    homepage: https://github.com/k1LoW/gh-grep
+    description: Print lines matching a pattern in repositories using GitHub API
+    license: MIT
+nfpms:
+  - id: gh-grep-nfpms
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
+    builds:
+      - gh-grep-linux
+    homepage: https://github.com/k1LoW/gh-grep
+    maintainer: Ken'ichiro Oyama <k1lowxb@gmail.com>
+    description: Print lines matching a pattern in repositories using GitHub API
+    license: MIT
+    formats:
+      - apk
+      - deb
+      - rpm
+    bindir: /usr/bin
+    epoch: 1
