@@ -4,6 +4,8 @@ Print lines matching a pattern in repositories using GitHub API
 
 ## Usage
 
+Do grep the Go codes of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `^import` .
+
 ``` console
 $ gh grep ^import --include=**/*.go --owner k1LoW --repo tbls
 ```
