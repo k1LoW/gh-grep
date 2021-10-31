@@ -18,13 +18,33 @@ type Gh struct {
 }
 
 func New() (*Gh, error) {
-	// GITHUB_TOKEN
-	token := os.Getenv("GITHUB_TOKEN")
+
+	var token, v3ep string
+	if EnvsNotEmpty("CI", "GITHUB_ACTION", "GITHUB_API_URL", "GITHUB_TOKEN") {
+		// GitHub Actions
+		token = os.Getenv("GITHUB_TOKEN")
+		v3ep = os.Getenv("GITHUB_API_URL")
+	} else if EnvsNotEmpty("GH_HOST", "GH_ENTERPRISE_TOKEN") || EnvsNotEmpty("GH_HOST", "GITHUB_ENTERPRISE_TOKEN") {
+		// GitHub Enterprise Server
+		token = os.Getenv("GH_ENTERPRISE_TOKEN")
+		if token == "" {
+			token = os.Getenv("GITHUB_ENTERPRISE_TOKEN")
+		}
+		v3ep = fmt.Sprintf("https://%s/api/v3", os.Getenv("GH_HOST"))
+	} else {
+		// GitHub.com
+		token = os.Getenv("GH_TOKEN")
+		if token == "" {
+			token = os.Getenv("GITHUB_TOKEN")
+		}
+	}
+
 	if token == "" {
 		return nil, fmt.Errorf("env %s is not set", "GITHUB_TOKEN")
 	}
+
 	v3c := github.NewClient(httpClient(token))
-	if v3ep := os.Getenv("GITHUB_API_URL"); v3ep != "" {
+	if v3ep != "" {
 		baseEndpoint, err := url.Parse(v3ep)
 		if err != nil {
 			return nil, err
@@ -68,6 +88,15 @@ func (g *Gh) Repositories(ctx context.Context, owner string) ([]string, error) {
 	}
 
 	return repos, nil
+}
+
+func EnvsNotEmpty(keys ...string) bool {
+	for _, k := range keys {
+		if os.Getenv(k) == "" {
+			return false
+		}
+	}
+	return true
 }
 
 type roundTripper struct {
