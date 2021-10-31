@@ -45,6 +45,10 @@ archives:
     - CREDITS
     - README.md
     - CHANGELOG.md
+-
+  id: gh-grep-binary
+  name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format: binary
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -71,6 +75,8 @@ dockers:
 brews:
   -
     name: gh-grep
+    ids:
+      - gh-grep-archive
     tap:
       owner: k1LoW
       name: homebrew-tap
