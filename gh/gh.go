@@ -24,7 +24,7 @@ func New() (*Gh, error) {
 		// GitHub Actions
 		token = os.Getenv("GITHUB_TOKEN")
 		v3ep = os.Getenv("GITHUB_API_URL")
-	} else if EnvsNotEmpty("GH_HOST", "GH_ENTERPRISE_TOKEN") || EnvsNotEmpty("GH_HOST", "GITHUB_ENTERPRISE_TOKEN") {
+	} else if os.Getenv("GH_HOST") != "github.com" && (EnvsNotEmpty("GH_HOST", "GH_ENTERPRISE_TOKEN") || EnvsNotEmpty("GH_HOST", "GITHUB_ENTERPRISE_TOKEN")) {
 		// GitHub Enterprise Server
 		token = os.Getenv("GH_ENTERPRISE_TOKEN")
 		if token == "" {
