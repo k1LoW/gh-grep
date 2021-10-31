@@ -32,6 +32,7 @@ import (
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/johejo/ghfs"
 	"github.com/k1LoW/gh-grep/gh"
+	"github.com/k1LoW/gh-grep/version"
 	"github.com/spf13/cobra"
 )
 
@@ -43,10 +44,12 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "gh-grep [PATTERN]",
-	Short: "Print lines matching a pattern in repositories using GitHub API",
-	Long:  `Print lines matching a pattern in repositories using GitHub API`,
-	Args:  cobra.ExactArgs(1),
+	Use:          "gh-grep [PATTERN]",
+	Short:        "Print lines matching a pattern in repositories using GitHub API",
+	Long:         `Print lines matching a pattern in repositories using GitHub API`,
+	Args:         cobra.ExactArgs(1),
+	Version:      version.Version,
+	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 		pattern, err := regexp.Compile(args[0])
@@ -116,6 +119,6 @@ func init() {
 	rootCmd.Flags().StringVarP(&owner, "owner", "", "", "owner")
 	rootCmd.MarkFlagRequired("owner")
 	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repo")
-	rootCmd.Flags().StringVarP(&include, "include", "", "**/*", "include")
-	rootCmd.Flags().StringVarP(&exclude, "exclude", "", "", "exclude")
+	rootCmd.Flags().StringVarP(&include, "include", "", "**/*", "search only files that match pattern")
+	rootCmd.Flags().StringVarP(&exclude, "exclude", "", "", "skip files and directories matching pattern")
 }
