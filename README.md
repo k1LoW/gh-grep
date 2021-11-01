@@ -4,13 +4,21 @@ Print lines matching a pattern in repositories using GitHub API
 
 ## Usage
 
-Do grep the codes (`**/*.go`) of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `^import` .
-
 ``` console
-$ gh grep ^import --include=**/*.go --owner k1LoW --repo tbls
+$ gh grep func.*schema.Schema --include=**/*.go --owner k1LoW --repo tbls
+k1LoW/tbls:cmd/doc.go:func withDot(s *schema.Schema, c *config.Config, force bool) (e error) {
+k1LoW/tbls:cmd/doc.go:func outputErExists(s *schema.Schema, path string) bool {
+k1LoW/tbls:config/config.go:func (c *Config) ModifySchema(s *schema.Schema) error {
+k1LoW/tbls:config/config.go:func (c *Config) MergeAdditionalData(s *schema.Schema) error {
+k1LoW/tbls:config/config.go:func (c *Config) FilterTables(s *schema.Schema) error {
+k1LoW/tbls:config/config.go:func (c *Config) mergeDictFromSchema(s *schema.Schema) {
+k1LoW/tbls:config/config.go:func excludeTableFromSchema(name string, s *schema.Schema) error {
+[...]
 ```
 
-## Example
+( Do grep the codes (`**/*.go`) of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `func.*schema.Schema` )
+
+## Examples
 
 ### List Actions you are using
 
