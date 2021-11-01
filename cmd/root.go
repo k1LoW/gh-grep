@@ -36,24 +36,32 @@ import (
 )
 
 var (
-	opts  scanner.Opts
-	repos []string
+	opts     scanner.Opts
+	patterns []string
+	repos    []string
 )
 
 var rootCmd = &cobra.Command{
 	Use:          "gh-grep [PATTERN]",
 	Short:        "Print lines matching a pattern in repositories using GitHub API",
 	Long:         `Print lines matching a pattern in repositories using GitHub API`,
-	Args:         cobra.ExactArgs(1),
 	Version:      version.Version,
 	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
-		pattern, err := regexp.Compile(args[0])
-		if err != nil {
-			return err
+		if len(patterns) == 0 {
+			patterns = []string{args[0]}
 		}
-		opts.Pattern = pattern
+
+		opts.Patterns = []*regexp.Regexp{}
+		for _, p := range patterns {
+			re, err := regexp.Compile(p)
+			if err != nil {
+				return err
+			}
+			opts.Patterns = append(opts.Patterns, re)
+		}
+
 		g, err := gh.New()
 		if err != nil {
 			return err
@@ -98,4 +106,5 @@ func init() {
 	rootCmd.Flags().StringVarP(&opts.Include, "include", "", "**/*", "search only files that match pattern")
 	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
 	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
+	rootCmd.Flags().StringSliceVarP(&patterns, "", "e", []string{}, "match pattern")
 }

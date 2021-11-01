@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"log"
 	"regexp"
+	"sort"
 
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/fatih/color"
@@ -19,7 +20,7 @@ var (
 )
 
 type Opts struct {
-	Pattern    *regexp.Regexp
+	Patterns   []*regexp.Regexp
 	Owner      string
 	Repo       string
 	Include    string
@@ -53,7 +54,24 @@ func Scan(ctx context.Context, fsys fs.FS, opts *Opts) error {
 		n := 1
 		for fscanner.Scan() {
 			line := fscanner.Text()
-			matches := opts.Pattern.FindAllStringIndex(line, -1)
+
+			matches := [][]int{}
+			for _, re := range opts.Patterns {
+				matches = append(matches, re.FindAllStringIndex(line, -1)...)
+			}
+
+			sort.Slice(matches, func(i, j int) bool {
+				return matches[i][0] > matches[j][0]
+			})
+
+			f := [][]int{}
+			for i := range matches {
+				if i+1 == len(matches) || matches[i][1] < matches[i+1][0] {
+					f = append(f, matches[i])
+				}
+			}
+			matches = f
+
 			if len(matches) > 0 {
 				if opts.LineNumber {
 					fmt.Printf("%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc))
