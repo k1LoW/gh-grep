@@ -1,3 +1,8 @@
+## [v0.4.0](https://github.com/k1LoW/gh-grep/compare/v0.3.0...v0.4.0) (2021-11-01)
+
+* Add option `-e` [#10](https://github.com/k1LoW/gh-grep/pull/10) ([k1LoW](https://github.com/k1LoW))
+* Add option `--line-number` [#9](https://github.com/k1LoW/gh-grep/pull/9) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.3.0](https://github.com/k1LoW/gh-grep/compare/v0.2.2...v0.3.0) (2021-11-01)
 
 * Color matched word [#8](https://github.com/k1LoW/gh-grep/pull/8) ([k1LoW](https://github.com/k1LoW))
