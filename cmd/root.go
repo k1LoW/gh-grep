@@ -25,7 +25,9 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"io/fs"
+	"log"
 	"os"
 	"regexp"
 
@@ -68,6 +70,7 @@ var rootCmd = &cobra.Command{
 		}
 
 		for _, repo := range repos {
+			log.Printf("In %s/%s\n", owner, repo)
 			fsys := ghfs.NewWithGitHubClient(g.Client(), owner, repo)
 			if err := doublestar.GlobWalk(fsys, include, func(path string, d fs.DirEntry) error {
 				if d.IsDir() {
@@ -79,12 +82,14 @@ var rootCmd = &cobra.Command{
 						return err
 					}
 					if match {
+						log.Printf("Exclude %s\n", path)
 						return nil
 					}
 				}
+				log.Printf("Search %s\n", path)
 				f, err := fsys.Open(path)
 				if err != nil {
-					return nil
+					return err
 				}
 				defer f.Close()
 				// TODO: detect encoding
@@ -110,6 +115,14 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	rootCmd.SetOut(os.Stdout)
+	rootCmd.SetErr(os.Stderr)
+
+	log.SetOutput(io.Discard)
+	if env := os.Getenv("DEBUG"); env != "" {
+		log.SetOutput(os.Stderr)
+	}
+
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
