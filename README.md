@@ -82,6 +82,9 @@ $ gh grep uses: --include=.github/workflows/* --owner k1LoW | sed -e 's/.*uses:\
 ### Open the matched lines in a browser.
 
 ``` console
+$ gh grep 'ioutil\.' --include=**/*.go --owner k1LoW --repo ghput --url
+https://github.com/k1LoW/ghput/blob/main/gh/gh.go#L300
+https://github.com/k1LoW/ghput/blob/main/gh/gh.go#L313
 $ gh grep 'ioutil\.' --include=**/*.go --owner k1LoW --repo ghput --url | xargs open
 ```
 
