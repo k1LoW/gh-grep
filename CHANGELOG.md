@@ -1,3 +1,7 @@
+## [v0.2.2](https://github.com/k1LoW/gh-grep/compare/v0.2.1...v0.2.2) (2021-11-01)
+
+* Color the output delimiter. [#7](https://github.com/k1LoW/gh-grep/pull/7) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.2.1](https://github.com/k1LoW/gh-grep/compare/v0.2.0...v0.2.1) (2021-11-01)
 
 

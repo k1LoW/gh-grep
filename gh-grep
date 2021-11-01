@@ -2,7 +2,7 @@
 set -e
 
 repo="k1LoW/gh-grep"
-tag=v0.2.1
+tag=v0.2.2
 
 extensionPath="$(dirname "$0")"
 arch="$(uname -m)"
