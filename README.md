@@ -23,7 +23,7 @@ k1LoW/tbls:config/config.go:func excludeTableFromSchema(name string, s *schema.S
 ### List Actions you are using
 
 ``` console
-$ gh grep uses: --include=.github/workflows/* --owner [Your Login] | sed -e 's/.*uses:\s*//g' | sort | uniq -c
+$ gh grep uses: --include=.github/workflows/* --owner k1LoW | sed -e 's/.*uses:\s*//g' | sort | uniq -c
    9 ./
    1 EndBug/add-and-commit@v7
    2 actions/checkout@master
@@ -32,6 +32,22 @@ $ gh grep uses: --include=.github/workflows/* --owner [Your Login] | sed -e 's/.
   18 actions/setup-go@v1
   21 actions/setup-go@v2
    4 aquasecurity/trivy-action@master
+[...]
+```
+
+### List base Docker images used in the Dockerfile of the project root
+
+``` console
+$ gh grep ^FROM --include=Dockerfile --owner k1LoW
+k1LoW/centve:Dockerfile:FROM centos:7
+k1LoW/docker-alpine-pandoc-ja:Dockerfile:FROM frolvlad/alpine-glibc
+k1LoW/docker-sshd:Dockerfile:FROM docker.io/alpine:3.9
+k1LoW/gh-grep:Dockerfile:FROM debian:buster-slim
+k1LoW/ghdag:Dockerfile:FROM debian:buster-slim
+k1LoW/ghdag-action:Dockerfile:FROM ghcr.io/k1low/ghdag:v0.16.0
+k1LoW/ghput:Dockerfile:FROM alpine:3.13
+k1LoW/ghput-release-action:Dockerfile:FROM ghcr.io/k1low/ghput:v0.12.0
+k1LoW/github-script-ruby:Dockerfile:FROM ghcr.io/k1low/github-script-ruby-base:v1.1.0
 [...]
 ```
 
