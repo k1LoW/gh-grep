@@ -35,6 +35,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/johejo/ghfs"
 	"github.com/k1LoW/gh-grep/gh"
+	"github.com/k1LoW/gh-grep/internal"
 	"github.com/k1LoW/gh-grep/version"
 	"github.com/spf13/cobra"
 )
@@ -70,6 +71,7 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
+		matchc := color.New(color.FgRed, color.Bold)
 		delimter := color.New(color.FgCyan).Sprint(":")
 
 		for _, repo := range repos {
@@ -101,8 +103,7 @@ var rootCmd = &cobra.Command{
 					line := fscanner.Text()
 					matches := pattern.FindAllStringIndex(line, -1)
 					if len(matches) > 0 {
-						// TODO: color
-						fmt.Printf("%s/%s%s%s%s%s\n", owner, repo, delimter, path, delimter, line)
+						fmt.Printf("%s/%s%s%s%s%s\n", owner, repo, delimter, path, delimter, internal.PrintLine(line, matches, matchc))
 					}
 				}
 				if err := fscanner.Err(); err != nil {
