@@ -36,10 +36,8 @@ import (
 )
 
 var (
-	owner   string
-	repos   []string
-	include string
-	exclude string
+	opts  scanner.Opts
+	repos []string
 )
 
 var rootCmd = &cobra.Command{
@@ -55,27 +53,23 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		opts.Pattern = pattern
 		g, err := gh.New()
 		if err != nil {
 			return err
 		}
 		if len(repos) == 0 {
-			repos, err = g.Repositories(ctx, owner)
+			repos, err = g.Repositories(ctx, opts.Owner)
 			if err != nil {
 				return err
 			}
 		}
 
 		for _, repo := range repos {
-			log.Printf("In %s/%s\n", owner, repo)
-			fsys := ghfs.NewWithGitHubClient(g.Client(), owner, repo)
-			if err := scanner.Scan(ctx, fsys, &scanner.Args{
-				Pattern: pattern,
-				Owner:   owner,
-				Repo:    repo,
-				Include: include,
-				Exclude: exclude,
-			}); err != nil {
+			log.Printf("In %s/%s\n", opts.Owner, repo)
+			fsys := ghfs.NewWithGitHubClient(g.Client(), opts.Owner, repo)
+			opts.Repo = repo
+			if err := scanner.Scan(ctx, fsys, &opts); err != nil {
 				return err
 			}
 		}
@@ -98,9 +92,10 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringVarP(&owner, "owner", "", "", "owner")
+	rootCmd.Flags().StringVarP(&opts.Owner, "owner", "", "", "owner")
 	rootCmd.MarkFlagRequired("owner")
 	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repo")
-	rootCmd.Flags().StringVarP(&include, "include", "", "**/*", "search only files that match pattern")
-	rootCmd.Flags().StringVarP(&exclude, "exclude", "", "", "skip files and directories matching pattern")
+	rootCmd.Flags().StringVarP(&opts.Include, "include", "", "**/*", "search only files that match pattern")
+	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
+	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
 }

@@ -18,21 +18,22 @@ var (
 	delimiter = color.New(color.FgCyan).Sprint(":")
 )
 
-type Args struct {
-	Pattern *regexp.Regexp
-	Owner   string
-	Repo    string
-	Include string
-	Exclude string
+type Opts struct {
+	Pattern    *regexp.Regexp
+	Owner      string
+	Repo       string
+	Include    string
+	Exclude    string
+	LineNumber bool
 }
 
-func Scan(ctx context.Context, fsys fs.FS, args *Args) error {
-	return doublestar.GlobWalk(fsys, args.Include, func(path string, d fs.DirEntry) error {
+func Scan(ctx context.Context, fsys fs.FS, opts *Opts) error {
+	return doublestar.GlobWalk(fsys, opts.Include, func(path string, d fs.DirEntry) error {
 		if d.IsDir() {
 			return nil
 		}
-		if args.Exclude != "" {
-			match, err := doublestar.PathMatch(args.Exclude, path)
+		if opts.Exclude != "" {
+			match, err := doublestar.PathMatch(opts.Exclude, path)
 			if err != nil {
 				return err
 			}
@@ -49,12 +50,18 @@ func Scan(ctx context.Context, fsys fs.FS, args *Args) error {
 		defer f.Close()
 		// TODO: detect encoding
 		fscanner := bufio.NewScanner(f)
+		n := 1
 		for fscanner.Scan() {
 			line := fscanner.Text()
-			matches := args.Pattern.FindAllStringIndex(line, -1)
+			matches := opts.Pattern.FindAllStringIndex(line, -1)
 			if len(matches) > 0 {
-				fmt.Printf("%s/%s%s%s%s%s\n", args.Owner, args.Repo, delimiter, path, delimiter, internal.PrintLine(line, matches, matchc))
+				if opts.LineNumber {
+					fmt.Printf("%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc))
+				} else {
+					fmt.Printf("%s/%s%s%s%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, internal.PrintLine(line, matches, matchc))
+				}
 			}
+			n += 1
 		}
 		if err := fscanner.Err(); err != nil {
 			return err
