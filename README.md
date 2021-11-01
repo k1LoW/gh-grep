@@ -18,6 +18,25 @@ k1LoW/tbls:config/config.go:func excludeTableFromSchema(name string, s *schema.S
 
 ( Do grep the codes (`**/*.go`) of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `func.*schema.Schema` )
 
+``` console
+$ gh grep --help
+Print lines matching a pattern in repositories using GitHub API
+
+Usage:
+  gh-grep [PATTERN] [flags]
+
+Flags:
+  -e, -- strings         match pattern
+      --exclude string   skip files and directories matching pattern
+  -h, --help             help for gh-grep
+  -i, --ignore-case      case insensitive matching
+      --include string   search only files that match pattern (default "**/*")
+  -n, --line-number      show line numbers
+      --owner string     owner
+      --repo strings     repo
+  -v, --version          version for gh-grep
+```
+
 #### :warning: Notice :warning:
 
 **`gh-grep` is very slow because it does all its scanning through the GitHub API.**
@@ -25,21 +44,6 @@ k1LoW/tbls:config/config.go:func excludeTableFromSchema(name string, s *schema.S
 **It is recommended to specify the `--include` option to get the results in a realistic time.**
 
 ## Examples
-
-### List Actions you are using
-
-``` console
-$ gh grep uses: --include=.github/workflows/* --owner k1LoW | sed -e 's/.*uses:\s*//g' | sort | uniq -c
-   9 ./
-   1 EndBug/add-and-commit@v7
-   2 actions/checkout@master
-  10 actions/checkout@v1
-  50 actions/checkout@v2
-  18 actions/setup-go@v1
-  21 actions/setup-go@v2
-   4 aquasecurity/trivy-action@master
-[...]
-```
 
 ### List base Docker images used in the Dockerfile of the project root
 
@@ -54,6 +58,21 @@ k1LoW/ghdag-action:Dockerfile:FROM ghcr.io/k1low/ghdag:v0.16.0
 k1LoW/ghput:Dockerfile:FROM alpine:3.13
 k1LoW/ghput-release-action:Dockerfile:FROM ghcr.io/k1low/ghput:v0.12.0
 k1LoW/github-script-ruby:Dockerfile:FROM ghcr.io/k1low/github-script-ruby-base:v1.1.0
+[...]
+```
+
+### List Actions you are using
+
+``` console
+$ gh grep uses: --include=.github/workflows/* --owner k1LoW | sed -e 's/.*uses:\s*//g' | sort | uniq -c
+   9 ./
+   1 EndBug/add-and-commit@v7
+   2 actions/checkout@master
+  10 actions/checkout@v1
+  50 actions/checkout@v2
+  18 actions/setup-go@v1
+  21 actions/setup-go@v2
+   4 aquasecurity/trivy-action@master
 [...]
 ```
 
