@@ -1,3 +1,6 @@
+## [v0.2.1](https://github.com/k1LoW/gh-grep/compare/v0.2.0...v0.2.1) (2021-11-01)
+
+
 ## [v0.2.0](https://github.com/k1LoW/gh-grep/compare/v0.1.1...v0.2.0) (2021-11-01)
 
 * Fix list repositories when org [#6](https://github.com/k1LoW/gh-grep/pull/6) ([k1LoW](https://github.com/k1LoW))
