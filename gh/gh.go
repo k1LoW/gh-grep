@@ -3,6 +3,7 @@ package gh
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -21,17 +22,20 @@ func New() (*Gh, error) {
 
 	var token, v3ep string
 	if EnvsNotEmpty("CI", "GITHUB_ACTION", "GITHUB_API_URL", "GITHUB_TOKEN") {
+		log.Println("Run on GitHub Actions")
 		// GitHub Actions
 		token = os.Getenv("GITHUB_TOKEN")
 		v3ep = os.Getenv("GITHUB_API_URL")
 	} else if os.Getenv("GH_HOST") != "github.com" && (EnvsNotEmpty("GH_HOST", "GH_ENTERPRISE_TOKEN") || EnvsNotEmpty("GH_HOST", "GITHUB_ENTERPRISE_TOKEN")) {
 		// GitHub Enterprise Server
+		log.Println("Run in GitHub Enterprise Server")
 		token = os.Getenv("GH_ENTERPRISE_TOKEN")
 		if token == "" {
 			token = os.Getenv("GITHUB_ENTERPRISE_TOKEN")
 		}
 		v3ep = fmt.Sprintf("https://%s/api/v3", os.Getenv("GH_HOST"))
 	} else {
+		log.Println("Run in GitHub.com")
 		// GitHub.com
 		token = os.Getenv("GH_TOKEN")
 		if token == "" {
