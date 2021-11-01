@@ -78,6 +78,14 @@ $ gh grep uses: --include=.github/workflows/* --owner k1LoW | sed -e 's/.*uses:\
 [...]
 ```
 
+### Open the matched lines in a browser.
+
+``` console
+$ gh grep 'ioutil\.' --include=**/*.go --owner k1LoW --repo ghput --url | xargs open
+```
+
+*`open` command only works on macOS.
+
 ## Install
 
 `gh-grep` can be installed as a standalone command or as [a GitHub CLI extension](https://cli.github.com/manual/gh_extension)
