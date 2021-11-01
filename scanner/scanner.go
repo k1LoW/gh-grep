@@ -12,6 +12,7 @@ import (
 
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/fatih/color"
+	"github.com/k1LoW/gh-grep/gh"
 	"github.com/k1LoW/gh-grep/internal"
 )
 
@@ -35,6 +36,8 @@ type Opts struct {
 	LineNumber bool
 	NameOnly   bool
 	RepoOnly   bool
+	URL        bool
+	Gh         *gh.Gh
 }
 
 func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
@@ -108,14 +111,31 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 					break
 				}
 
+				// --url
+				if opts.URL {
+					u, err := opts.Gh.ContentURL(ctx, opts.Owner, opts.Repo, path)
+					if err != nil {
+						return err
+					}
+					if _, err := fmt.Fprintf(w, "%s#L%d\n", u, n); err != nil {
+						return err
+					}
+					n += 1
+					continue
+				}
+
+				// --line-number
 				if opts.LineNumber {
 					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
 						return err
 					}
-				} else {
-					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
-						return err
-					}
+					n += 1
+					continue
+				}
+
+				// default
+				if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
+					return err
 				}
 			}
 			n += 1

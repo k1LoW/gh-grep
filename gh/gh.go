@@ -122,6 +122,17 @@ func (g *Gh) Repositories(ctx context.Context, owner string) ([]string, error) {
 	return repos, nil
 }
 
+func (g *Gh) ContentURL(ctx context.Context, owner, repo, path string) (string, error) {
+	fc, _, _, err := g.client.Repositories.GetContents(ctx, owner, repo, path, &github.RepositoryContentGetOptions{})
+	if err != nil {
+		return "", err
+	}
+	if fc == nil {
+		return "", fmt.Errorf("%s is not file", path)
+	}
+	return fc.GetHTMLURL(), nil
+}
+
 func EnvsNotEmpty(keys ...string) bool {
 	for _, k := range keys {
 		if os.Getenv(k) == "" {
