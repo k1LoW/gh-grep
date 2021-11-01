@@ -33,6 +33,7 @@ import (
 	"github.com/k1LoW/gh-grep/gh"
 	"github.com/k1LoW/gh-grep/scanner"
 	"github.com/k1LoW/gh-grep/version"
+	"github.com/mattn/go-colorable"
 	"github.com/spf13/cobra"
 )
 
@@ -41,6 +42,8 @@ var (
 	patterns   []string
 	repos      []string
 	ignoreCase bool
+	stdout     = colorable.NewColorableStdout()
+	stderr     = colorable.NewColorableStderr()
 )
 
 var rootCmd = &cobra.Command{
@@ -82,7 +85,7 @@ var rootCmd = &cobra.Command{
 			log.Printf("In %s/%s\n", opts.Owner, repo)
 			fsys := ghfs.NewWithGitHubClient(g.Client(), opts.Owner, repo)
 			opts.Repo = repo
-			if err := scanner.Scan(ctx, fsys, os.Stdout, &opts); err != nil {
+			if err := scanner.Scan(ctx, fsys, stdout, &opts); err != nil {
 				if errors.Is(err, &scanner.RepoOnlyError{}) {
 					continue
 				} else {
@@ -95,8 +98,8 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	rootCmd.SetOut(os.Stdout)
-	rootCmd.SetErr(os.Stderr)
+	rootCmd.SetOut(stdout)
+	rootCmd.SetErr(stderr)
 
 	log.SetOutput(io.Discard)
 	if env := os.Getenv("DEBUG"); env != "" {
