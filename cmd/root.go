@@ -71,6 +71,7 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		opts.Gh = g
 		if len(repos) == 0 {
 			repos, err = g.Repositories(ctx, opts.Owner)
 			if err != nil {
@@ -120,5 +121,6 @@ func init() {
 	rootCmd.Flags().BoolVarP(&ignoreCase, "ignore-case", "i", false, "case insensitive matching")
 	rootCmd.Flags().BoolVarP(&opts.NameOnly, "name-only", "", false, "show only repository:filenames")
 	rootCmd.Flags().BoolVarP(&opts.RepoOnly, "repo-only", "", false, "show only repositories")
+	rootCmd.Flags().BoolVarP(&opts.URL, "url", "", false, "show URL")
 	rootCmd.Flags().StringSliceVarP(&patterns, "", "e", []string{}, "match pattern")
 }
