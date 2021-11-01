@@ -1,6 +1,6 @@
 # gh-grep
 
-Print lines matching a pattern in repositories using GitHub API
+:octocat: Print lines matching a pattern in repositories using GitHub API
 
 ## Usage
 
@@ -32,8 +32,10 @@ Flags:
   -i, --ignore-case      case insensitive matching
       --include string   search only files that match pattern (default "**/*")
   -n, --line-number      show line numbers
+      --name-only        show only repository:filenames
       --owner string     owner
       --repo strings     repo
+      --repo-only        show only repositories
   -v, --version          version for gh-grep
 ```
 
