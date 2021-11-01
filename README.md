@@ -36,6 +36,7 @@ Flags:
       --owner string     owner
       --repo strings     repo
       --repo-only        show only repositories
+      --url              show URL
   -v, --version          version for gh-grep
 ```
 
