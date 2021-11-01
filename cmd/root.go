@@ -32,6 +32,7 @@ import (
 	"regexp"
 
 	"github.com/bmatcuk/doublestar/v4"
+	"github.com/fatih/color"
 	"github.com/johejo/ghfs"
 	"github.com/k1LoW/gh-grep/gh"
 	"github.com/k1LoW/gh-grep/version"
@@ -69,6 +70,8 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
+		delimter := color.New(color.FgCyan).Sprint(":")
+
 		for _, repo := range repos {
 			log.Printf("In %s/%s\n", owner, repo)
 			fsys := ghfs.NewWithGitHubClient(g.Client(), owner, repo)
@@ -99,7 +102,7 @@ var rootCmd = &cobra.Command{
 					matches := pattern.FindAllStringIndex(line, -1)
 					if len(matches) > 0 {
 						// TODO: color
-						fmt.Printf("%s/%s:%s:%s\n", owner, repo, path, line)
+						fmt.Printf("%s/%s%s%s%s%s\n", owner, repo, delimter, path, delimter, line)
 					}
 				}
 				if err := fscanner.Err(); err != nil {
