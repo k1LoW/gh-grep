@@ -24,7 +24,7 @@ var (
 type RepoOnlyError struct{}
 
 func (e *RepoOnlyError) Error() string {
-	return "already errored"
+	return "repository name already displayed"
 }
 
 type Opts struct {
@@ -97,6 +97,8 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 			matches = f
 
 			if len(matches) > 0 {
+
+				// --repo-only
 				if opts.RepoOnly {
 					if _, err := fmt.Fprintf(w, "%s/%s\n", opts.Owner, opts.Repo); err != nil {
 						return err
@@ -104,6 +106,7 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 					return new(RepoOnlyError)
 				}
 
+				// --name-only
 				if opts.NameOnly {
 					if _, err := fmt.Fprintf(w, "%s/%s%s%s\n", opts.Owner, opts.Repo, delimiter, path); err != nil {
 						return err
