@@ -1,3 +1,7 @@
+## [v0.3.0](https://github.com/k1LoW/gh-grep/compare/v0.2.2...v0.3.0) (2021-11-01)
+
+* Color matched word [#8](https://github.com/k1LoW/gh-grep/pull/8) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.2.2](https://github.com/k1LoW/gh-grep/compare/v0.2.1...v0.2.2) (2021-11-01)
 
 * Color the output delimiter. [#7](https://github.com/k1LoW/gh-grep/pull/7) ([k1LoW](https://github.com/k1LoW))
