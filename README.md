@@ -4,10 +4,27 @@ Print lines matching a pattern in repositories using GitHub API
 
 ## Usage
 
-Do grep the Go codes of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `^import` .
+Do grep the codes (`**/*.go`) of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `^import` .
 
 ``` console
 $ gh grep ^import --include=**/*.go --owner k1LoW --repo tbls
+```
+
+## Example
+
+### List Actions you are using
+
+``` console
+$ gh grep uses: --include=.github/workflows/* --owner [Your Login] | sed -e 's/.*uses:\s*//g' | sort | uniq -c
+   9 ./
+   1 EndBug/add-and-commit@v7
+   2 actions/checkout@master
+  10 actions/checkout@v1
+  50 actions/checkout@v2
+  18 actions/setup-go@v1
+  21 actions/setup-go@v2
+   4 aquasecurity/trivy-action@master
+[...]
 ```
 
 ## Install
