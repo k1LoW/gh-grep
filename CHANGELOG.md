@@ -1,3 +1,8 @@
+## [v0.5.0](https://github.com/k1LoW/gh-grep/compare/v0.4.0...v0.5.0) (2021-11-01)
+
+* Add options `--name-only` `--repo-only` [#12](https://github.com/k1LoW/gh-grep/pull/12) ([k1LoW](https://github.com/k1LoW))
+* Add option `--ignore-case` [#11](https://github.com/k1LoW/gh-grep/pull/11) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.4.0](https://github.com/k1LoW/gh-grep/compare/v0.3.0...v0.4.0) (2021-11-01)
 
 * Add option `-e` [#10](https://github.com/k1LoW/gh-grep/pull/10) ([k1LoW](https://github.com/k1LoW))
