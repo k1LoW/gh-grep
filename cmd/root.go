@@ -22,29 +22,22 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"bufio"
 	"context"
-	"fmt"
 	"io"
-	"io/fs"
 	"log"
 	"os"
 	"regexp"
 
-	"github.com/bmatcuk/doublestar/v4"
-	"github.com/fatih/color"
 	"github.com/johejo/ghfs"
 	"github.com/k1LoW/gh-grep/gh"
-	"github.com/k1LoW/gh-grep/internal"
+	"github.com/k1LoW/gh-grep/scanner"
 	"github.com/k1LoW/gh-grep/version"
 	"github.com/spf13/cobra"
 )
 
 var (
-	owner   string
-	repos   []string
-	include string
-	exclude string
+	opts  scanner.Opts
+	repos []string
 )
 
 var rootCmd = &cobra.Command{
@@ -60,57 +53,23 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		opts.Pattern = pattern
 		g, err := gh.New()
 		if err != nil {
 			return err
 		}
 		if len(repos) == 0 {
-			repos, err = g.Repositories(ctx, owner)
+			repos, err = g.Repositories(ctx, opts.Owner)
 			if err != nil {
 				return err
 			}
 		}
 
-		matchc := color.New(color.FgRed, color.Bold)
-		delimter := color.New(color.FgCyan).Sprint(":")
-
 		for _, repo := range repos {
-			log.Printf("In %s/%s\n", owner, repo)
-			fsys := ghfs.NewWithGitHubClient(g.Client(), owner, repo)
-			if err := doublestar.GlobWalk(fsys, include, func(path string, d fs.DirEntry) error {
-				if d.IsDir() {
-					return nil
-				}
-				if exclude != "" {
-					match, err := doublestar.PathMatch(exclude, path)
-					if err != nil {
-						return err
-					}
-					if match {
-						log.Printf("Exclude %s\n", path)
-						return nil
-					}
-				}
-				log.Printf("Search %s\n", path)
-				f, err := fsys.Open(path)
-				if err != nil {
-					return err
-				}
-				defer f.Close()
-				// TODO: detect encoding
-				fscanner := bufio.NewScanner(f)
-				for fscanner.Scan() {
-					line := fscanner.Text()
-					matches := pattern.FindAllStringIndex(line, -1)
-					if len(matches) > 0 {
-						fmt.Printf("%s/%s%s%s%s%s\n", owner, repo, delimter, path, delimter, internal.PrintLine(line, matches, matchc))
-					}
-				}
-				if err := fscanner.Err(); err != nil {
-					return err
-				}
-				return nil
-			}); err != nil {
+			log.Printf("In %s/%s\n", opts.Owner, repo)
+			fsys := ghfs.NewWithGitHubClient(g.Client(), opts.Owner, repo)
+			opts.Repo = repo
+			if err := scanner.Scan(ctx, fsys, &opts); err != nil {
 				return err
 			}
 		}
@@ -133,9 +92,10 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringVarP(&owner, "owner", "", "", "owner")
+	rootCmd.Flags().StringVarP(&opts.Owner, "owner", "", "", "owner")
 	rootCmd.MarkFlagRequired("owner")
 	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repo")
-	rootCmd.Flags().StringVarP(&include, "include", "", "**/*", "search only files that match pattern")
-	rootCmd.Flags().StringVarP(&exclude, "exclude", "", "", "skip files and directories matching pattern")
+	rootCmd.Flags().StringVarP(&opts.Include, "include", "", "**/*", "search only files that match pattern")
+	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
+	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
 }
