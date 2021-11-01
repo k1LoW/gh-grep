@@ -1,3 +1,9 @@
+## [v0.6.0](https://github.com/k1LoW/gh-grep/compare/v0.5.0...v0.6.0) (2021-11-02)
+
+* Fix script [#14](https://github.com/k1LoW/gh-grep/pull/14) ([mattn](https://github.com/mattn))
+* Support colors on Windows [#13](https://github.com/k1LoW/gh-grep/pull/13) ([mattn](https://github.com/mattn))
+* Add option `--url` [#15](https://github.com/k1LoW/gh-grep/pull/15) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.5.0](https://github.com/k1LoW/gh-grep/compare/v0.4.0...v0.5.0) (2021-11-01)
 
 * Add options `--name-only` `--repo-only` [#12](https://github.com/k1LoW/gh-grep/pull/12) ([k1LoW](https://github.com/k1LoW))
