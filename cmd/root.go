@@ -77,7 +77,7 @@ var rootCmd = &cobra.Command{
 			log.Printf("In %s/%s\n", opts.Owner, repo)
 			fsys := ghfs.NewWithGitHubClient(g.Client(), opts.Owner, repo)
 			opts.Repo = repo
-			if err := scanner.Scan(ctx, fsys, &opts); err != nil {
+			if err := scanner.Scan(ctx, fsys, os.Stdout, &opts); err != nil {
 				return err
 			}
 		}
@@ -101,7 +101,9 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().StringVarP(&opts.Owner, "owner", "", "", "owner")
-	rootCmd.MarkFlagRequired("owner")
+	if err := rootCmd.MarkFlagRequired("owner"); err != nil {
+		panic(err)
+	}
 	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repo")
 	rootCmd.Flags().StringVarP(&opts.Include, "include", "", "**/*", "search only files that match pattern")
 	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")

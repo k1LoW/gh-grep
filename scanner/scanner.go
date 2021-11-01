@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"io/fs"
 	"log"
 	"regexp"
@@ -28,7 +29,7 @@ type Opts struct {
 	LineNumber bool
 }
 
-func Scan(ctx context.Context, fsys fs.FS, opts *Opts) error {
+func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 	return doublestar.GlobWalk(fsys, opts.Include, func(path string, d fs.DirEntry) error {
 		if d.IsDir() {
 			return nil
@@ -74,9 +75,13 @@ func Scan(ctx context.Context, fsys fs.FS, opts *Opts) error {
 
 			if len(matches) > 0 {
 				if opts.LineNumber {
-					fmt.Printf("%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc))
+					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
+						return err
+					}
 				} else {
-					fmt.Printf("%s/%s%s%s%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, internal.PrintLine(line, matches, matchc))
+					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
+						return err
+					}
 				}
 			}
 			n += 1
