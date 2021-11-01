@@ -10,13 +10,17 @@ Do grep the Go codes of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pat
 $ gh grep ^import --include=**/*.go --owner k1LoW --repo tbls
 ```
 
-## Install as [a GitHub CLI extension](https://cli.github.com/manual/gh_extension)
+## Install
+
+`gh-grep` can be installed as a standalone command or as [a GitHub CLI extension](https://cli.github.com/manual/gh_extension)
+
+### Install as a GitHub CLI extension
 
 ``` console
 $ gh extension install k1LoW/gh-grep
 ```
 
-## Install as a single command
+### Install as a standalone command
 
 Run `gh-grep` instead of `gh grep`.
 
