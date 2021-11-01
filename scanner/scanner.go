@@ -20,6 +20,12 @@ var (
 	delimiter = color.New(color.FgCyan).Sprint(":")
 )
 
+type RepoOnlyError struct{}
+
+func (e *RepoOnlyError) Error() string {
+	return "already errored"
+}
+
 type Opts struct {
 	Patterns   []*regexp.Regexp
 	Owner      string
@@ -27,6 +33,8 @@ type Opts struct {
 	Include    string
 	Exclude    string
 	LineNumber bool
+	NameOnly   bool
+	RepoOnly   bool
 }
 
 func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
@@ -86,6 +94,20 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 			matches = f
 
 			if len(matches) > 0 {
+				if opts.RepoOnly {
+					if _, err := fmt.Fprintf(w, "%s/%s\n", opts.Owner, opts.Repo); err != nil {
+						return err
+					}
+					return new(RepoOnlyError)
+				}
+
+				if opts.NameOnly {
+					if _, err := fmt.Fprintf(w, "%s/%s%s%s\n", opts.Owner, opts.Repo, delimiter, path); err != nil {
+						return err
+					}
+					break
+				}
+
 				if opts.LineNumber {
 					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
 						return err
