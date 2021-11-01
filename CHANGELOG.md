@@ -1,3 +1,8 @@
+## [v0.2.0](https://github.com/k1LoW/gh-grep/compare/v0.1.1...v0.2.0) (2021-11-01)
+
+* Fix list repositories when org [#6](https://github.com/k1LoW/gh-grep/pull/6) ([k1LoW](https://github.com/k1LoW))
+* Add debug log [#5](https://github.com/k1LoW/gh-grep/pull/5) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.1.1](https://github.com/k1LoW/gh-grep/compare/v0.1.0...v0.1.1) (2021-11-01)
 
 * Fix handling of environment variables. [#4](https://github.com/k1LoW/gh-grep/pull/4) ([k1LoW](https://github.com/k1LoW))
