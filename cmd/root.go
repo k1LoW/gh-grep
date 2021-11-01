@@ -118,7 +118,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
 	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
 	rootCmd.Flags().BoolVarP(&ignoreCase, "ignore-case", "i", false, "case insensitive matching")
-	rootCmd.Flags().BoolVarP(&opts.NameOnly, "name-only", "", false, "show only repogitory:filenames")
-	rootCmd.Flags().BoolVarP(&opts.RepoOnly, "repo-only", "", false, "show only repogitory")
+	rootCmd.Flags().BoolVarP(&opts.NameOnly, "name-only", "", false, "show only repository:filenames")
+	rootCmd.Flags().BoolVarP(&opts.RepoOnly, "repo-only", "", false, "show only repositories")
 	rootCmd.Flags().StringSliceVarP(&patterns, "", "e", []string{}, "match pattern")
 }
