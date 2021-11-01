@@ -11,7 +11,7 @@ exe=""
 
 if uname -a | grep Msys > /dev/null; then
   if [ $arch = "x86_64" ]; then
-    exe="gh-grep_${tag}_windows_amd64"
+    exe="gh-grep_${tag}_windows_amd64.exe"
   fi
 elif uname -a | grep Darwin > /dev/null; then
   if [ $arch = "x86_64" ]; then
@@ -38,7 +38,7 @@ if [ "${exe}" == "" ]; then
   cd - > /dev/null
 else
   if [[ ! -x "${extensionPath}/bin/${exe}" ]]; then
-    mkdir -p bin
+    mkdir -p "${extensionPath}/bin"
     rm -f "${extensionPath}/bin/*"
     gh release -R"${repo}" download "${tag}" -p "${exe}" --dir="${extensionPath}/bin"
     chmod +x "${extensionPath}/bin/${exe}"
