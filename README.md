@@ -18,6 +18,12 @@ k1LoW/tbls:config/config.go:func excludeTableFromSchema(name string, s *schema.S
 
 ( Do grep the codes (`**/*.go`) of [k1LoW/tbls](https://github.com/k1LoW/tbls) with the pattern `func.*schema.Schema` )
 
+## :warning: Notice :warning:
+
+`gh-grep` is very slow because it does all its scanning through the GitHub API.
+
+It is recommended to specify the `--include` option to get the results in a realistic time.
+
 ## Examples
 
 ### List Actions you are using
