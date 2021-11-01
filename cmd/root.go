@@ -99,7 +99,7 @@ var rootCmd = &cobra.Command{
 					matches := pattern.FindAllStringIndex(line, -1)
 					if len(matches) > 0 {
 						// TODO: color
-						fmt.Printf("%s/%s/%s:%s\n", owner, repo, path, line)
+						fmt.Printf("%s/%s:%s:%s\n", owner, repo, path, line)
 					}
 				}
 				if err := fscanner.Err(); err != nil {
