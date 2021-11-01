@@ -71,24 +71,52 @@ func (g *Gh) Client() *github.Client {
 func (g *Gh) Repositories(ctx context.Context, owner string) ([]string, error) {
 	repos := []string{}
 
-	page := 1
-	for {
-		rs, res, err := g.client.Repositories.List(ctx, owner, &github.RepositoryListOptions{
-			ListOptions: github.ListOptions{
-				Page:    page,
-				PerPage: 100,
-			},
-		})
-		if err != nil {
-			return nil, err
+	u, _, err := g.client.Users.Get(ctx, owner)
+	if err != nil {
+		return nil, err
+	}
+	if u.GetType() == "User" {
+		// User
+		page := 1
+		for {
+			rs, res, err := g.client.Repositories.List(ctx, owner, &github.RepositoryListOptions{
+				ListOptions: github.ListOptions{
+					Page:    page,
+					PerPage: 100,
+				},
+			})
+			if err != nil {
+				return nil, err
+			}
+			for _, r := range rs {
+				repos = append(repos, *r.Name)
+			}
+			if res.NextPage == 0 {
+				break
+			}
+			page = res.NextPage
 		}
-		for _, r := range rs {
-			repos = append(repos, *r.Name)
+	} else {
+		// Organization
+		page := 1
+		for {
+			rs, res, err := g.client.Repositories.ListByOrg(ctx, owner, &github.RepositoryListByOrgOptions{
+				ListOptions: github.ListOptions{
+					Page:    page,
+					PerPage: 100,
+				},
+			})
+			if err != nil {
+				return nil, err
+			}
+			for _, r := range rs {
+				repos = append(repos, *r.Name)
+			}
+			if res.NextPage == 0 {
+				break
+			}
+			page = res.NextPage
 		}
-		if res.NextPage == 0 {
-			break
-		}
-		page = res.NextPage
 	}
 
 	return repos, nil
