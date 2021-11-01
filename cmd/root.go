@@ -23,6 +23,7 @@ package cmd
 
 import (
 	"context"
+	"errors"
 	"io"
 	"log"
 	"os"
@@ -82,7 +83,11 @@ var rootCmd = &cobra.Command{
 			fsys := ghfs.NewWithGitHubClient(g.Client(), opts.Owner, repo)
 			opts.Repo = repo
 			if err := scanner.Scan(ctx, fsys, os.Stdout, &opts); err != nil {
-				return err
+				if errors.Is(err, &scanner.RepoOnlyError{}) {
+					continue
+				} else {
+					return err
+				}
 			}
 		}
 		return nil
@@ -113,5 +118,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
 	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
 	rootCmd.Flags().BoolVarP(&ignoreCase, "ignore-case", "i", false, "case insensitive matching")
+	rootCmd.Flags().BoolVarP(&opts.NameOnly, "name-only", "", false, "show only repogitory:filenames")
+	rootCmd.Flags().BoolVarP(&opts.RepoOnly, "repo-only", "", false, "show only repogitory")
 	rootCmd.Flags().StringSliceVarP(&patterns, "", "e", []string{}, "match pattern")
 }
