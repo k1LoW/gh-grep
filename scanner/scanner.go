@@ -37,6 +37,7 @@ type Opts struct {
 	NameOnly   bool
 	RepoOnly   bool
 	URL        bool
+	Count      bool
 	Gh         *gh.Gh
 }
 
@@ -64,6 +65,7 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 		// TODO: detect encoding
 		fscanner := bufio.NewScanner(f)
 		n := 1
+		c := 0
 		for fscanner.Scan() {
 			line := fscanner.Text()
 
@@ -97,6 +99,12 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 			matches = f
 
 			if len(matches) > 0 {
+
+				// --count
+				if opts.Count {
+					c += 1
+					continue
+				}
 
 				// --repo-only
 				if opts.RepoOnly {
@@ -146,6 +154,14 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 		if err := fscanner.Err(); err != nil {
 			return err
 		}
+
+		// --count
+		if opts.Count && c > 0 {
+			if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%d\n", opts.Owner, opts.Repo, delimiter, path, delimiter, c); err != nil {
+				return err
+			}
+		}
+
 		return nil
 	})
 }
