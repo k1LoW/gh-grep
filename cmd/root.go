@@ -113,11 +113,11 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringVarP(&opts.Owner, "owner", "", "", "owner")
+	rootCmd.Flags().StringVarP(&opts.Owner, "owner", "", "", "repository owner or org")
 	if err := rootCmd.MarkFlagRequired("owner"); err != nil {
 		panic(err)
 	}
-	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repo")
+	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repository name")
 	rootCmd.Flags().StringVarP(&opts.Include, "include", "", "**/*", "search only files that match pattern")
 	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
 	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
@@ -125,5 +125,6 @@ func init() {
 	rootCmd.Flags().BoolVarP(&opts.NameOnly, "name-only", "", false, "show only repository:filenames")
 	rootCmd.Flags().BoolVarP(&opts.RepoOnly, "repo-only", "", false, "show only repositories")
 	rootCmd.Flags().BoolVarP(&opts.URL, "url", "", false, "show URL")
+	rootCmd.Flags().BoolVarP(&opts.Count, "count", "c", false, "show the number of matches instead of matching lines")
 	rootCmd.Flags().StringSliceVarP(&patterns, "", "e", []string{}, "match pattern")
 }
