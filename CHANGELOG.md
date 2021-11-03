@@ -1,3 +1,8 @@
+## [v0.7.0](https://github.com/k1LoW/gh-grep/compare/v0.6.0...v0.7.0) (2021-11-03)
+
+* Add option `--only-matching` [#17](https://github.com/k1LoW/gh-grep/pull/17) ([k1LoW](https://github.com/k1LoW))
+* Add option `--count` [#16](https://github.com/k1LoW/gh-grep/pull/16) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.6.0](https://github.com/k1LoW/gh-grep/compare/v0.5.0...v0.6.0) (2021-11-02)
 
 * Fix script [#14](https://github.com/k1LoW/gh-grep/pull/14) ([mattn](https://github.com/mattn))
