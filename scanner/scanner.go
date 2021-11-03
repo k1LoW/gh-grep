@@ -28,17 +28,18 @@ func (e *RepoOnlyError) Error() string {
 }
 
 type Opts struct {
-	Patterns   []*regexp.Regexp
-	Owner      string
-	Repo       string
-	Include    string
-	Exclude    string
-	LineNumber bool
-	NameOnly   bool
-	RepoOnly   bool
-	URL        bool
-	Count      bool
-	Gh         *gh.Gh
+	Patterns     []*regexp.Regexp
+	Owner        string
+	Repo         string
+	Include      string
+	Exclude      string
+	LineNumber   bool
+	NameOnly     bool
+	RepoOnly     bool
+	URL          bool
+	Count        bool
+	OnlyMatching bool
+	Gh           *gh.Gh
 }
 
 func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
@@ -138,6 +139,15 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 				// --line-number
 				if opts.LineNumber {
 					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%d%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, n, delimiter, internal.PrintLine(line, matches, matchc)); err != nil {
+						return err
+					}
+					n += 1
+					continue
+				}
+
+				// --only-matching
+				if opts.OnlyMatching {
+					if _, err := fmt.Fprintf(w, "%s/%s%s%s%s%s\n", opts.Owner, opts.Repo, delimiter, path, delimiter, internal.PrintOnlyMatches(line, matches, matchc)); err != nil {
 						return err
 					}
 					n += 1

@@ -26,3 +26,16 @@ func PrintLine(line string, matches [][]int, c *color.Color) string {
 
 	return colored
 }
+
+func PrintOnlyMatches(line string, matches [][]int, c *color.Color) string {
+	if !utf8.Valid([]byte(line)) {
+		return ""
+	}
+	if len(matches) == 0 {
+		return ""
+	}
+	for _, m := range matches {
+		return c.Sprint(line[m[0]:m[1]])
+	}
+	return ""
+}

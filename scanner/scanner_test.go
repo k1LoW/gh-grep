@@ -125,6 +125,21 @@ owner/repo:path/to/go/d.txt:epsilon
 `,
 			false,
 		},
+		{
+			baseFS,
+			&Opts{
+				Patterns:     []*regexp.Regexp{regexp.MustCompile(".*l")},
+				Owner:        "owner",
+				Repo:         "repo",
+				Include:      "**/*",
+				OnlyMatching: true,
+			},
+			`owner/repo:path/a.txt:al
+owner/repo:path/to/go/d.txt:del
+owner/repo:path/to/go/d.txt:epsil
+`,
+			false,
+		},
 	}
 
 	ctx := context.Background()
