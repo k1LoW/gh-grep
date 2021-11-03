@@ -1,0 +1,8 @@
+codeToTestRatio:
+  code:
+    - '**/*.go'
+    - '!**/*_test.go'
+  test:
+    - '**/*_test.go'
+comment:
+  if: github.event_name == 'pull_request'

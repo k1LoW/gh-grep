@@ -126,5 +126,6 @@ func init() {
 	rootCmd.Flags().BoolVarP(&opts.RepoOnly, "repo-only", "", false, "show only repositories")
 	rootCmd.Flags().BoolVarP(&opts.URL, "url", "", false, "show URL")
 	rootCmd.Flags().BoolVarP(&opts.Count, "count", "c", false, "show the number of matches instead of matching lines")
+	rootCmd.Flags().BoolVarP(&opts.OnlyMatching, "only-matching", "o", false, "show only matching parts of a line")
 	rootCmd.Flags().StringSliceVarP(&patterns, "", "e", []string{}, "match pattern")
 }
