@@ -1,3 +1,8 @@
+## [v0.8.0](https://github.com/k1LoW/gh-grep/compare/v0.7.0...v0.8.0) (2021-11-06)
+
+* Use k1LoW/ghfs instead of johejo/ghfs [#19](https://github.com/k1LoW/gh-grep/pull/19) ([k1LoW](https://github.com/k1LoW))
+* README: add MacPorts install info [#18](https://github.com/k1LoW/gh-grep/pull/18) ([herbygillot](https://github.com/herbygillot))
+
 ## [v0.7.0](https://github.com/k1LoW/gh-grep/compare/v0.6.0...v0.7.0) (2021-11-03)
 
 * Add option `--only-matching` [#17](https://github.com/k1LoW/gh-grep/pull/17) ([k1LoW](https://github.com/k1LoW))
