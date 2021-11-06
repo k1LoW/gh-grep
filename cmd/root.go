@@ -29,10 +29,10 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/johejo/ghfs"
 	"github.com/k1LoW/gh-grep/gh"
 	"github.com/k1LoW/gh-grep/scanner"
 	"github.com/k1LoW/gh-grep/version"
+	"github.com/k1LoW/ghfs"
 	"github.com/mattn/go-colorable"
 	"github.com/spf13/cobra"
 )
@@ -84,7 +84,10 @@ var rootCmd = &cobra.Command{
 
 		for _, repo := range repos {
 			log.Printf("In %s/%s\n", opts.Owner, repo)
-			fsys := ghfs.NewWithGitHubClient(g.Client(), opts.Owner, repo)
+			fsys, err := ghfs.NewWithGithubClient(g.Client(), opts.Owner, repo)
+			if err != nil {
+				return err
+			}
 			opts.Repo = repo
 			if err := scanner.Scan(ctx, fsys, stdout, &opts); err != nil {
 				if errors.Is(err, &scanner.RepoOnlyError{}) {
