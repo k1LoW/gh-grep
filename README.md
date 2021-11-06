@@ -135,6 +135,14 @@ $ curl -L https://git.io/apk-add-from-url | sh -s -- https://github.com/k1LoW/gh
 $ brew install k1LoW/tap/gh-grep
 ```
 
+**macports:**
+
+```console
+$ sudo port install gh-grep
+```
+
+Maintainer: @herbygillot
+
 **manually:**
 
 Download binary from [releases page](https://github.com/k1LoW/gh-grep/releases)
