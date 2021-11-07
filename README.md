@@ -27,15 +27,19 @@ Usage:
 
 Flags:
   -e, -- strings         match pattern
+      --branch string    branch name
+  -c, --count            show the number of matches instead of matching lines
       --exclude string   skip files and directories matching pattern
   -h, --help             help for gh-grep
   -i, --ignore-case      case insensitive matching
       --include string   search only files that match pattern (default "**/*")
   -n, --line-number      show line numbers
       --name-only        show only repository:filenames
-      --owner string     owner
-      --repo strings     repo
+  -o, --only-matching    show only matching parts of a line
+      --owner string     repository owner or org
+      --repo strings     repository name
       --repo-only        show only repositories
+      --tag string       tag name
       --url              show URL
   -v, --version          version for gh-grep
 ```
