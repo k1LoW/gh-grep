@@ -42,6 +42,8 @@ var (
 	patterns   []string
 	repos      []string
 	ignoreCase bool
+	branch     string
+	tag        string
 	stdout     = colorable.NewColorableStdout()
 	stderr     = colorable.NewColorableStderr()
 )
@@ -82,9 +84,17 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
+		fsOpts := []ghfs.Option{ghfs.Client(g.Client())}
+		if branch != "" {
+			fsOpts = append(fsOpts, ghfs.Branch(branch))
+		}
+		if tag != "" {
+			fsOpts = append(fsOpts, ghfs.Tag(tag))
+		}
+
 		for _, repo := range repos {
 			log.Printf("In %s/%s\n", opts.Owner, repo)
-			fsys, err := ghfs.NewWithGithubClient(g.Client(), opts.Owner, repo)
+			fsys, err := ghfs.New(opts.Owner, repo, fsOpts...)
 			if err != nil {
 				return err
 			}
@@ -121,6 +131,8 @@ func init() {
 		panic(err)
 	}
 	rootCmd.Flags().StringSliceVarP(&repos, "repo", "", []string{}, "repository name")
+	rootCmd.Flags().StringVarP(&branch, "branch", "", "", "branch name")
+	rootCmd.Flags().StringVarP(&tag, "tag", "", "", "tag name")
 	rootCmd.Flags().StringVarP(&opts.Include, "include", "", "**/*", "search only files that match pattern")
 	rootCmd.Flags().StringVarP(&opts.Exclude, "exclude", "", "", "skip files and directories matching pattern")
 	rootCmd.Flags().BoolVarP(&opts.LineNumber, "line-number", "n", false, "show line numbers")
