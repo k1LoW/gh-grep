@@ -1,3 +1,7 @@
+## [v0.9.0](https://github.com/k1LoW/gh-grep/compare/v0.8.0...v0.9.0) (2021-11-07)
+
+* Add options `--branch` and `--tag` [#20](https://github.com/k1LoW/gh-grep/pull/20) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.8.0](https://github.com/k1LoW/gh-grep/compare/v0.7.0...v0.8.0) (2021-11-06)
 
 * Use k1LoW/ghfs instead of johejo/ghfs [#19](https://github.com/k1LoW/gh-grep/pull/19) ([k1LoW](https://github.com/k1LoW))
