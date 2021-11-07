@@ -84,7 +84,7 @@ var rootCmd = &cobra.Command{
 
 		for _, repo := range repos {
 			log.Printf("In %s/%s\n", opts.Owner, repo)
-			fsys, err := ghfs.NewWithGithubClient(g.Client(), opts.Owner, repo)
+			fsys, err := ghfs.New(opts.Owner, repo, ghfs.Client(g.Client()))
 			if err != nil {
 				return err
 			}
