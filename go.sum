@@ -181,10 +181,10 @@ github.com/json-iterator/go v1.1.11/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/jtolds/gls v4.20.0+incompatible/go.mod h1:QJZ7F/aHp+rZTRtaJ1ow/lLfFfVYBRgL+9YlvaHOwJU=
-github.com/k1LoW/ghfs v0.4.0 h1:Yowad9219wlBvDVXqgvAoB0y8cW9FFHAVTEVb+pfsBg=
-github.com/k1LoW/ghfs v0.4.0/go.mod h1:H7IrfW7T/sWwbNTu9GkGD/5FyLVRTu80Q7qWIP8Y0xo=
-github.com/k1LoW/go-github-client/v39 v39.2.1 h1:JB+NKQ50pKV4fCbB5+vuD2KZRKaeEOyKe0FDqokJZ8A=
-github.com/k1LoW/go-github-client/v39 v39.2.1/go.mod h1:fb0+5/ZUFspjDNIOqmzCb1s2KVI1UIOrDAQprhfhecY=
+github.com/k1LoW/ghfs v0.6.0 h1:w0SfwuIyDC4piEkwsZpdY6emegCOWea62ibecwBXvfk=
+github.com/k1LoW/ghfs v0.6.0/go.mod h1:tVL/+pSx0tOHdlQyTzhdopRJBjDwb4vsjRVnJgzxt30=
+github.com/k1LoW/go-github-client/v39 v39.2.2 h1:BML9eBIvMnlM+u2awm8hugeaT//dd8ilR3sM5i/FzG8=
+github.com/k1LoW/go-github-client/v39 v39.2.2/go.mod h1:fb0+5/ZUFspjDNIOqmzCb1s2KVI1UIOrDAQprhfhecY=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
