@@ -9,6 +9,7 @@ import (
 	"log"
 	"regexp"
 	"sort"
+	"strings"
 
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/fatih/color"
@@ -64,11 +65,17 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 		}
 		defer f.Close()
 		// TODO: detect encoding
-		fscanner := bufio.NewScanner(f)
+		r := bufio.NewReader(f)
 		n := 1
 		c := 0
-		for fscanner.Scan() {
-			line := fscanner.Text()
+		for {
+			str, err := r.ReadString('\n')
+			if err == io.EOF {
+				break
+			} else if err != nil {
+				return err
+			}
+			line := strings.TrimRight(str, "\n")
 
 			matches := [][]int{}
 			for _, re := range opts.Patterns {
@@ -160,9 +167,6 @@ func Scan(ctx context.Context, fsys fs.FS, w io.Writer, opts *Opts) error {
 				}
 			}
 			n += 1
-		}
-		if err := fscanner.Err(); err != nil {
-			return err
 		}
 
 		// --count
