@@ -1,3 +1,7 @@
+## [v0.11.0](https://github.com/k1LoW/gh-grep/compare/v0.10.0...v0.11.0) (2022-03-29)
+
+* Use bufio.NewReader instead of bufio.NewScanner [#24](https://github.com/k1LoW/gh-grep/pull/24) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.10.0](https://github.com/k1LoW/gh-grep/compare/v0.9.0...v0.10.0) (2021-11-16)
 
 * Update packages and Go [#22](https://github.com/k1LoW/gh-grep/pull/22) ([k1LoW](https://github.com/k1LoW))
