@@ -1,6 +1,6 @@
 module github.com/k1LoW/gh-grep
 
-go 1.17
+go 1.19
 
 require (
 	github.com/bmatcuk/doublestar/v4 v4.0.2

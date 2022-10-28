@@ -110,11 +110,10 @@ Run `gh-grep` instead of `gh grep`.
 
 **deb:**
 
-Use [dpkg-i-from-url](https://github.com/k1LoW/dpkg-i-from-url)
-
 ``` console
 $ export GH-GREP_VERSION=X.X.X
-$ curl -L https://git.io/dpkg-i-from-url | bash -s -- https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.deb
+$ curl -o gh-grep.deb -L https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.deb
+$ dpkg -i runn.deb
 ```
 
 **RPM:**
@@ -126,11 +125,10 @@ $ yum install https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSI
 
 **apk:**
 
-Use [apk-add-from-url](https://github.com/k1LoW/apk-add-from-url)
-
 ``` console
 $ export GH-GREP_VERSION=X.X.X
-$ curl -L https://git.io/apk-add-from-url | sh -s -- https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.apk
+$ curl -o gh-grep.apk -L https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.apk
+$ apk add gh-grep.apk
 ```
 
 **homebrew tap:**
