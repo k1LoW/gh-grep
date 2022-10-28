@@ -10,22 +10,18 @@ jobs:
   job-test:
     name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go_version: [1.17]
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DEBUG: 1
     steps:
-      - name: Set up Go ${{ matrix.go_version }}
-        uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go_version }}
-
       - name: Check out source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          go-version-file: go.mod
+          cache: true
 
       - name: Run lint
         uses: reviewdog/action-golangci-lint@v2
