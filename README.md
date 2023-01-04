@@ -111,23 +111,23 @@ Run `gh-grep` instead of `gh grep`.
 **deb:**
 
 ``` console
-$ export GH-GREP_VERSION=X.X.X
-$ curl -o gh-grep.deb -L https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.deb
-$ dpkg -i runn.deb
+$ export GH_GREP_VERSION=X.X.X
+$ curl -o gh-grep.deb -L https://github.com/k1LoW/gh-grep/releases/download/v$GH_GREP_VERSION/gh-grep_$GH_GREP_VERSION-1_amd64.deb
+$ dpkg -i gh-grep.deb
 ```
 
 **RPM:**
 
 ``` console
-$ export GH-GREP_VERSION=X.X.X
-$ yum install https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.rpm
+$ export GH_GREP_VERSION=X.X.X
+$ yum install https://github.com/k1LoW/gh-grep/releases/download/v$GH_GREP_VERSION/gh-grep_$GH_GREP_VERSION-1_amd64.rpm
 ```
 
 **apk:**
 
 ``` console
-$ export GH-GREP_VERSION=X.X.X
-$ curl -o gh-grep.apk -L https://github.com/k1LoW/gh-grep/releases/download/v$GH-GREP_VERSION/gh-grep_$GH-GREP_VERSION-1_amd64.apk
+$ export GH_GREP_VERSION=X.X.X
+$ curl -o gh-grep.apk -L https://github.com/k1LoW/gh-grep/releases/download/v$GH_GREP_VERSION/gh-grep_$GH_GREP_VERSION-1_amd64.apk
 $ apk add gh-grep.apk
 ```
 
