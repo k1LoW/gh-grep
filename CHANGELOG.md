@@ -1,3 +1,9 @@
+## [v0.11.1](https://github.com/k1LoW/gh-grep/compare/v0.11.0...v0.11.1) (2023-02-03)
+
+* Update pkgs [#28](https://github.com/k1LoW/gh-grep/pull/28) ([k1LoW](https://github.com/k1LoW))
+* FIX README [#26](https://github.com/k1LoW/gh-grep/pull/26) ([pyama86](https://github.com/pyama86))
+* git.io deprecation [#25](https://github.com/k1LoW/gh-grep/pull/25) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.11.0](https://github.com/k1LoW/gh-grep/compare/v0.10.0...v0.11.0) (2022-03-29)
 
 * Use bufio.NewReader instead of bufio.NewScanner [#24](https://github.com/k1LoW/gh-grep/pull/24) ([k1LoW](https://github.com/k1LoW))
