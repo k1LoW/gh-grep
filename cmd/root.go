@@ -56,7 +56,7 @@ var rootCmd = &cobra.Command{
 	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
-		if len(patterns) == 0 {
+		if len(patterns) == 0 && len(args) > 0 {
 			patterns = []string{args[0]}
 		}
 
