@@ -40,6 +40,6 @@ prerelease:
 
 release:
 	git push origin main --tag
-	goreleaser --rm-dist
+	goreleaser --clean
 
 .PHONY: default test

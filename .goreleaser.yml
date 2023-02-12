@@ -45,10 +45,12 @@ archives:
     - CREDITS
     - README.md
     - CHANGELOG.md
+  rlcp: true
 -
   id: gh-grep-binary
   name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   format: binary
+  rlcp: true
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -72,20 +74,6 @@ dockers:
       - "--label=org.opencontainers.image.source=https://github.com/k1LoW/gh-grep"
     extra_files:
       - scripts/entrypoint.sh
-brews:
-  -
-    name: gh-grep
-    ids:
-      - gh-grep-archive
-    tap:
-      owner: k1LoW
-      name: homebrew-tap
-    commit_author:
-      name: k1LoW
-      email: k1lowxb@gmail.com
-    homepage: https://github.com/k1LoW/gh-grep
-    description: Print lines matching a pattern in repositories using GitHub API
-    license: MIT
 nfpms:
   - id: gh-grep-nfpms
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
