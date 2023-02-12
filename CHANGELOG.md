@@ -1,3 +1,7 @@
+## [v1.0.1](https://github.com/k1LoW/gh-grep/compare/v1.0.0...v1.0.1) (2023-02-12)
+
+* Fix handling no patterns error [#32](https://github.com/k1LoW/gh-grep/pull/32) ([k1LoW](https://github.com/k1LoW))
+
 ## [v1.0.0](https://github.com/k1LoW/gh-grep/compare/v0.11.1...v1.0.0) (2023-02-12)
 
 * Bump up go-github-client (and mote) version [#31](https://github.com/k1LoW/gh-grep/pull/31) ([k1LoW](https://github.com/k1LoW))
