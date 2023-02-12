@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/google/go-github/v48/github"
-	"github.com/k1LoW/go-github-client/v48/factory"
+	"github.com/google/go-github/v50/github"
+	"github.com/k1LoW/go-github-client/v50/factory"
 )
 
 type Gh struct {
