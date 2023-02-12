@@ -59,6 +59,9 @@ var rootCmd = &cobra.Command{
 		if len(patterns) == 0 && len(args) > 0 {
 			patterns = []string{args[0]}
 		}
+		if len(patterns) == 0 {
+			return errors.New("no patterns")
+		}
 
 		opts.Patterns = []*regexp.Regexp{}
 		for _, p := range patterns {
