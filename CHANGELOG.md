@@ -1,3 +1,9 @@
+## [v1.0.0](https://github.com/k1LoW/gh-grep/compare/v0.11.1...v1.0.0) (2023-02-12)
+
+* Bump up go-github-client (and mote) version [#31](https://github.com/k1LoW/gh-grep/pull/31) ([k1LoW](https://github.com/k1LoW))
+* Fix handling args [#30](https://github.com/k1LoW/gh-grep/pull/30) ([k1LoW](https://github.com/k1LoW))
+* Use `gh release` for detecting latest tag [#29](https://github.com/k1LoW/gh-grep/pull/29) ([k1LoW](https://github.com/k1LoW))
+
 ## [v0.11.1](https://github.com/k1LoW/gh-grep/compare/v0.11.0...v0.11.1) (2023-02-03)
 
 * Update pkgs [#28](https://github.com/k1LoW/gh-grep/pull/28) ([k1LoW](https://github.com/k1LoW))
