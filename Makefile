@@ -34,7 +34,6 @@ prerelease:
 	go mod tidy
 	ghch -w -N ${VER}
 	gocredits . > CREDITS
-	sed -i -e "s#tag=v.*#tag=${VER}#g" gh-grep
 	git add CHANGELOG.md CREDITS go.mod go.sum gh-grep
 	git commit -m'Bump up version number'
 	git tag ${VER}
