@@ -1,3 +1,9 @@
+## [v1.1.0](https://github.com/k1LoW/gh-grep/compare/v1.0.1...v1.1.0) (2023-03-09)
+
+* Update go and pkgs [#36](https://github.com/k1LoW/gh-grep/pull/36) ([k1LoW](https://github.com/k1LoW))
+* Bump golang.org/x/net from 0.5.0 to 0.7.0 [#34](https://github.com/k1LoW/gh-grep/pull/34) ([dependabot[bot]](https://github.com/apps/dependabot))
+* Bump golang.org/x/crypto from 0.0.0-20210817164053-32db794688a5 to 0.1.0 [#33](https://github.com/k1LoW/gh-grep/pull/33) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.0.1](https://github.com/k1LoW/gh-grep/compare/v1.0.0...v1.0.1) (2023-02-12)
 
 * Fix handling no patterns error [#32](https://github.com/k1LoW/gh-grep/pull/32) ([k1LoW](https://github.com/k1LoW))
