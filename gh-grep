@@ -2,7 +2,7 @@
 set -e
 
 repo="k1LoW/gh-grep"
-tag="$(gh release list -R k1LoW/gh-grep --limit 1 | cut -f 1)"
+tag="$(gh release list -R github.com/k1LoW/gh-grep --limit 1 | cut -f 1)"
 
 extensionPath="$(dirname "$0")"
 arch="$(uname -m)"
