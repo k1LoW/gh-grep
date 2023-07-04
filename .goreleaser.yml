@@ -42,6 +42,7 @@ archives:
     - goos: darwin
       format: zip
   files:
+    - LICENSE
     - CREDITS
     - README.md
     - CHANGELOG.md
@@ -57,23 +58,6 @@ snapshot:
   name_template: "{{ .Version }}-next"
 changelog:
   skip: true
-dockers:
-  -
-    goos: linux
-    goarch: amd64
-    image_templates:
-      - 'ghcr.io/k1low/gh-grep:v{{ .Version }}'
-      - 'ghcr.io/k1low/gh-grep:latest'
-    dockerfile: Dockerfile
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.name={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
-      - "--label=org.opencontainers.image.source=https://github.com/k1LoW/gh-grep"
-    extra_files:
-      - scripts/entrypoint.sh
 nfpms:
   - id: gh-grep-nfpms
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"

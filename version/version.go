@@ -4,4 +4,4 @@ package version
 const Name string = "gh-grep"
 
 // Version for this
-var Version = "dev"
+var Version = "1.1.0"
