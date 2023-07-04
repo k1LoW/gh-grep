@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-repo="k1LoW/gh-grep"
+repo="github.com/k1LoW/gh-grep"
 tag="$(gh release list -R github.com/k1LoW/gh-grep --limit 1 | cut -f 1)"
 
 extensionPath="$(dirname "$0")"
@@ -40,7 +40,7 @@ else
   if [[ ! -x "${extensionPath}/bin/${exe}" ]]; then
     mkdir -p "${extensionPath}/bin"
     rm -f "${extensionPath}/bin/*"
-    gh release -R"${repo}" download "${tag}" -p "${exe}" --dir="${extensionPath}/bin"
+    gh release -R "${repo}" download "${tag}" -p "${exe}" --dir="${extensionPath}/bin"
     chmod +x "${extensionPath}/bin/${exe}"
   fi
 fi
