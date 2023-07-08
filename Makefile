@@ -14,13 +14,16 @@ BUILD_LDFLAGS = -X $(PKG).commit=$(COMMIT) -X $(PKG).date=$(DATE)
 
 default: test
 
-ci: depsdev test
+ci: depsdev test test-setup
 
 test:
 	go test ./... -coverprofile=coverage.out -covermode=count
 
 lint:
 	golangci-lint run ./...
+
+test-setup:
+	./gh-grep --help
 
 build:
 	go build -ldflags="$(BUILD_LDFLAGS)" -o ghgrep
