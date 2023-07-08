@@ -4,6 +4,7 @@ set -e
 extensionPath="$(dirname "$0")"
 
 cd "${extensionPath}" > /dev/null
+git fetch --tags
 tag="$(git tag | grep ^v | sort --version-sort | tail -1)"
 cd - > /dev/null
 
