@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
-repo="github.com/k1LoW/gh-grep"
-tag="$(gh release list -R github.com/k1LoW/gh-grep --limit 1 | cut -f 1)"
-
 extensionPath="$(dirname "$0")"
+
+cd "${extensionPath}" > /dev/null
+tag="$(git tag | grep ^v | sort --version-sort | tail -1)"
+cd - > /dev/null
+
 arch="$(uname -m)"
 
 exe=""
@@ -25,6 +27,9 @@ elif uname -a | grep Linux > /dev/null; then
   fi
 fi
 
+rm -f "${extensionPath}/bin/*"
+mkdir -p "${extensionPath}/bin"
+
 if [ "${exe}" == "" ]; then
   if [ "$(which go)" = "" ]; then
     echo "go must be installed to use this gh extension on this platform"
@@ -34,15 +39,17 @@ if [ "${exe}" == "" ]; then
   exe="cmd.out"
 
   cd "${extensionPath}" > /dev/null
-  go build -o "${exe}"
+  go build -o "${extensionPath}/bin/${exe}"
   cd - > /dev/null
 else
   if [[ ! -x "${extensionPath}/bin/${exe}" ]]; then
-    mkdir -p "${extensionPath}/bin"
-    rm -f "${extensionPath}/bin/*"
-    gh release -R "${repo}" download "${tag}" -p "${exe}" --dir="${extensionPath}/bin"
-    chmod +x "${extensionPath}/bin/${exe}"
+    if [ "$(which curl)" = "" ]; then
+      echo "curl must be installed to use this gh extension on this platform"
+      exit 1
+    fi
+    curl -sL -o "${extensionPath}/bin/${exe}" https://github.com/k1LoW/gh-grep/releases/download/${tag}/${exe}
   fi
 fi
+chmod +x "${extensionPath}/bin/${exe}"
 
 exec "${extensionPath}/bin/${exe}" "$@"
