@@ -13,6 +13,7 @@ cd - > /dev/null
 # Get arch
 arch="$(uname -m)"
 
+# Get binary file name
 exe="gh-grep" # default
 if uname -a | grep Msys > /dev/null; then
   if [ $arch = "x86_64" ]; then
