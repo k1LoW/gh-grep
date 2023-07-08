@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  job-test:
+  test:
     name: Test
     runs-on: ubuntu-latest
     env:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
           cache: true
@@ -36,3 +36,26 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
+
+  setup-test:
+    name: Set up test
+    if: github.event_name == 'pull_request'
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    env:
+      DEBUG: 1
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Run tests
+        run: make test-setup
+        shell: bash

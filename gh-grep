@@ -1,31 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
-repo="github.com/k1LoW/gh-grep"
-tag="$(gh release list -R github.com/k1LoW/gh-grep --limit 1 | cut -f 1)"
+# Get extension repository path
+extPath="$(dirname "$0")"
 
-extensionPath="$(dirname "$0")"
+# Get latest version
+cd "${extPath}" > /dev/null
+ver="$(git tag | grep ^v | sort --version-sort | tail -1)"
+if [ "${ver}" = "" ]; then
+  git fetch --tags > /dev/null 2>&1
+  ver="$(git tag | grep ^v | sort --version-sort | tail -1)"
+fi
+cd - > /dev/null
+
+# Get arch
 arch="$(uname -m)"
 
-exe=""
-
+# Get binary file name
+exe="gh-grep" # default
 if uname -a | grep Msys > /dev/null; then
-  if [ $arch = "x86_64" ]; then
-    exe="gh-grep_${tag}_windows_amd64.exe"
+  if [ "${arch}" = "x86_64" ]; then
+    exe="gh-grep_${ver}_windows_amd64.exe"
   fi
 elif uname -a | grep Darwin > /dev/null; then
-  if [ $arch = "x86_64" ]; then
-    exe="gh-grep_${tag}_darwin_amd64"
-  elif [ $arch = "arm64" ]; then
-    exe="gh-grep_${tag}_darwin_arm64"
+  if [ "${arch}" = "x86_64" ]; then
+    exe="gh-grep_${ver}_darwin_amd64"
+  elif [ "${arch}" = "arm64" ]; then
+    exe="gh-grep_${ver}_darwin_arm64"
   fi
 elif uname -a | grep Linux > /dev/null; then
-  if [ $arch = "x86_64" ]; then
-    exe="gh-grep_${tag}_linux_amd64"
+  if [ "${arch}" = "x86_64" ]; then
+    exe="gh-grep_${ver}_linux_amd64"
   fi
 fi
 
-if [ "${exe}" == "" ]; then
+# Cleanup bin/ dir
+rm -f "${extPath}/bin/*"
+mkdir -p "${extPath}/bin"
+
+binPath="${extPath}/bin/${exe}"
+
+if [ "${exe}" == "gh-grep" ]; then
+  # Build binary
   if [ "$(which go)" = "" ]; then
     echo "go must be installed to use this gh extension on this platform"
     exit 1
@@ -33,16 +49,19 @@ if [ "${exe}" == "" ]; then
 
   exe="cmd.out"
 
-  cd "${extensionPath}" > /dev/null
-  go build -o "${exe}"
+  cd "${extPath}" > /dev/null
+  go build -o "${binPath}"
   cd - > /dev/null
 else
-  if [[ ! -x "${extensionPath}/bin/${exe}" ]]; then
-    mkdir -p "${extensionPath}/bin"
-    rm -f "${extensionPath}/bin/*"
-    gh release -R "${repo}" download "${tag}" -p "${exe}" --dir="${extensionPath}/bin"
-    chmod +x "${extensionPath}/bin/${exe}"
+  # Download release binary
+  if [[ ! -x "${binPath}" ]]; then
+    if [ "$(which curl)" = "" ]; then
+      echo "curl must be installed to use this gh extension on this platform"
+      exit 1
+    fi
+    curl -sL -o "${binPath}" "https://github.com/k1LoW/gh-grep/releases/download/${ver}/${exe}"
   fi
 fi
+chmod +x "${binPath}"
 
-exec "${extensionPath}/bin/${exe}" "$@"
+exec "${binPath}" "$@"

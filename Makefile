@@ -22,6 +22,9 @@ test:
 lint:
 	golangci-lint run ./...
 
+test-setup:
+	./gh-grep --help
+
 build:
 	go build -ldflags="$(BUILD_LDFLAGS)" -o ghgrep
 
