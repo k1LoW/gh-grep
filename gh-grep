@@ -31,6 +31,8 @@ elif uname -a | grep Darwin > /dev/null; then
 elif uname -a | grep Linux > /dev/null; then
   if [ "${arch}" = "x86_64" ]; then
     exe="gh-grep_${ver}_linux_amd64"
+  elif [ "${arch}" = "arm64" ] || [ "${arch}" = "aarch64" ]; then
+    exe="gh-grep_${ver}_linux_arm64"
   fi
 fi
 

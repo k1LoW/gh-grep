@@ -11,6 +11,7 @@ builds:
     - linux
   goarch:
     - amd64
+    - arm64
   ldflags:
     - -s -w -X github.com/k1LoW/gh-grep.version={{.Version}} -X github.com/k1LoW/gh-grep.commit={{.FullCommit}} -X github.com/k1LoW/gh-grep.date={{.Date}} -X github.com/k1LoW/gh-grep/version.Version={{.Version}}
 -
