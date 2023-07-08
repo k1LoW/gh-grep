@@ -1,3 +1,8 @@
+## [v1.2.0](https://github.com/k1LoW/gh-grep/compare/v1.1.1...v1.2.0) - 2023-07-08
+- Set up gh-grep without gh command by @k1LoW in https://github.com/k1LoW/gh-grep/pull/43
+- Support linux aarch64 by @k1LoW in https://github.com/k1LoW/gh-grep/pull/45
+- Update pkgs by @k1LoW in https://github.com/k1LoW/gh-grep/pull/46
+
 ## [v1.1.1](https://github.com/k1LoW/gh-grep/compare/v1.1.0...v1.1.1) - 2023-07-04
 - Pin the API for getting release information to `api.github.com` by @k1LoW in https://github.com/k1LoW/gh-grep/pull/38
 - Fix omissions by @k1LoW in https://github.com/k1LoW/gh-grep/pull/39
