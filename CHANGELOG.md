@@ -1,3 +1,6 @@
+## [v1.2.1](https://github.com/k1LoW/gh-grep/compare/v1.2.0...v1.2.1) - 2023-10-12
+- Bump golang.org/x/net from 0.12.0 to 0.17.0 by @dependabot in https://github.com/k1LoW/gh-grep/pull/47
+
 ## [v1.2.0](https://github.com/k1LoW/gh-grep/compare/v1.1.1...v1.2.0) - 2023-07-08
 - Set up gh-grep without gh command by @k1LoW in https://github.com/k1LoW/gh-grep/pull/43
 - Support linux aarch64 by @k1LoW in https://github.com/k1LoW/gh-grep/pull/45
