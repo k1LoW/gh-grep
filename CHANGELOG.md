@@ -1,3 +1,9 @@
+## [v1.2.2](https://github.com/k1LoW/gh-grep/compare/v1.2.1...v1.2.2) - 2024-04-19
+- Bump golang.org/x/crypto from 0.14.0 to 0.17.0 by @dependabot in https://github.com/k1LoW/gh-grep/pull/49
+- Bump github.com/cloudflare/circl from 1.3.3 to 1.3.7 by @dependabot in https://github.com/k1LoW/gh-grep/pull/51
+- Bump google.golang.org/protobuf from 1.31.0 to 1.33.0 by @dependabot in https://github.com/k1LoW/gh-grep/pull/52
+- Bump golang.org/x/net from 0.17.0 to 0.23.0 by @dependabot in https://github.com/k1LoW/gh-grep/pull/53
+
 ## [v1.2.1](https://github.com/k1LoW/gh-grep/compare/v1.2.0...v1.2.1) - 2023-10-12
 - Bump golang.org/x/net from 0.12.0 to 0.17.0 by @dependabot in https://github.com/k1LoW/gh-grep/pull/47
 
