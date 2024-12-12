@@ -1,3 +1,5 @@
+## [v1.2.3](https://github.com/k1LoW/gh-grep/compare/v1.2.2...v1.2.3) - 2024-12-12
+
 ## [v1.2.2](https://github.com/k1LoW/gh-grep/compare/v1.2.1...v1.2.2) - 2024-12-12
 - Bump golang.org/x/crypto from 0.14.0 to 0.17.0 by @dependabot in https://github.com/k1LoW/gh-grep/pull/49
 - Bump github.com/cloudflare/circl from 1.3.3 to 1.3.7 by @dependabot in https://github.com/k1LoW/gh-grep/pull/51
