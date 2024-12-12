@@ -1,3 +1,4 @@
+version: 2
 before:
   hooks:
     - go mod download
@@ -47,18 +48,15 @@ archives:
     - CREDITS
     - README.md
     - CHANGELOG.md
-  rlcp: true
 -
   id: gh-grep-binary
   name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   format: binary
-  rlcp: true
 checksum:
   name_template: 'checksums.txt'
 snapshot:
   name_template: "{{ .Version }}-next"
 changelog:
-  skip: true
 nfpms:
   - id: gh-grep-nfpms
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
