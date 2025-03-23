@@ -1,3 +1,6 @@
+## [v1.2.4](https://github.com/k1LoW/gh-grep/compare/v1.2.3...v1.2.4) - 2025-03-22
+- Bump github.com/golang-jwt/jwt/v4 from 4.5.1 to 4.5.2 by @dependabot in https://github.com/k1LoW/gh-grep/pull/58
+
 ## [v1.2.3](https://github.com/k1LoW/gh-grep/compare/v1.2.2...v1.2.3) - 2024-12-12
 
 ## [v1.2.2](https://github.com/k1LoW/gh-grep/compare/v1.2.1...v1.2.2) - 2024-12-12
