@@ -37,7 +37,7 @@ func (g *Gh) Repositories(ctx context.Context, owner string) ([]string, error) {
 		// User
 		page := 1
 		for {
-			rs, res, err := g.client.Repositories.List(ctx, owner, &github.RepositoryListOptions{
+			rs, res, err := g.client.Repositories.ListByUser(ctx, owner, &github.RepositoryListByUserOptions{
 				ListOptions: github.ListOptions{
 					Page:    page,
 					PerPage: 100,
