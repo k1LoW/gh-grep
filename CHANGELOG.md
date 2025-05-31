@@ -1,3 +1,6 @@
+## [v1.2.5](https://github.com/k1LoW/gh-grep/compare/v1.2.4...v1.2.5) - 2025-05-31
+- Bump github.com/cli/go-gh/v2 from 2.11.1 to 2.12.1 by @dependabot in https://github.com/k1LoW/gh-grep/pull/60
+
 ## [v1.2.4](https://github.com/k1LoW/gh-grep/compare/v1.2.3...v1.2.4) - 2025-03-22
 - Bump github.com/golang-jwt/jwt/v4 from 4.5.1 to 4.5.2 by @dependabot in https://github.com/k1LoW/gh-grep/pull/58
 
