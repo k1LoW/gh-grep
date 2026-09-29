@@ -1,3 +1,8 @@
+## [v1.2.6](https://github.com/k1LoW/gh-grep/compare/v1.2.5...v1.2.6) - 2026-09-28
+
+- chore: setup tagpr labels by @k1LoW in https://github.com/k1LoW/gh-grep/pull/63
+- ci: generate CREDITS with gocredits v1.0.0 from a make target by @k1LoW in https://github.com/k1LoW/gh-grep/pull/65
+
 ## [v1.2.5](https://github.com/k1LoW/gh-grep/compare/v1.2.4...v1.2.5) - 2025-05-31
 - Bump github.com/cli/go-gh/v2 from 2.11.1 to 2.12.1 by @dependabot in https://github.com/k1LoW/gh-grep/pull/60
 
